@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "start": "node app"
+  },
+  "name": "network-experiment",
+  "version": "1.0.0",
+  "description": "A js network experiment",
+  "main": "app.js",
+  "author": "arnargisla",
+  "license": "MIT",
+  "dependencies": {
+    "css-loader": "^0.25.0",
+    "express": "^4.14.0",
+    "socketio": "^1.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3"
+  }
+}
