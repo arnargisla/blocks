@@ -8,8 +8,16 @@ class Position {
         return this.x;
     }
 
+    setX(x){
+      this.x = x;
+    }
+
     getY(){
         return this.y;
+    }
+
+    setY(y){
+      this.y = y;
     }
 }
 

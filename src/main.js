@@ -1,63 +1,45 @@
-import { Player } from "Player.js";
+import { Canvas } from "./Canvas.js";
+import { Game } from "./Game.js";
+import { Keyboard } from "./Keyboard.js";
+import { Player } from "./Player.js";
 
-class Canvas {
-  constructor(canvasHtmlElemnt){
-    this.canvas = canvasHtmlElemnt;
+function calculateDelta(lastTime, timeStamp){
+  if(lastTime){
+    return timeStamp - lastTime;
+  } else {
+    lastTime = timeStamp;
+    return calculateDelta(lastTime, timeStamp);
   }
 }
 
-class Game {
-    constructor(players){
-        this.players = players;
-    }
-
-    gatherInputs(){
-
-    }
-
-    update(dt){
-
-    }
-
-    render(ctx){
-        [...this.players].map(p => p.render());
-    }
-}
-
-function calculateDelta(lastTime, timeStamp){
-    if(lastTime){
-        return timeStamp - lastTime;
-    } else {
-        lastTime = timeStamp;
-        return calculateDelta(lastTime, timeStamp);
-    }
-}
-
 function run(lastTime, timeStamp, game){
-    dt = calculateDelta(lastTime, timeStamp)
-    
+  const dt = calculateDelta(lastTime, timeStamp)
+
     if(game.state === "running"){
-        game.gatherInputs();
-        game.update(dt);
-        game.render();        
+      game.gatherInputs();
+      game.update(dt);
+      game.render();        
     }
 
-
-    requestFrame(timeStamp, game);
+  requestFrame(timeStamp, game);
 }
 
 function requestFrame(lastTime, game){
-    window.requestAnimationFrame(timeStamp=>run(lastTime, timeStamp, game));
+  window.requestAnimationFrame(timeStamp=>run(lastTime, timeStamp, game));
 }
 
 function startGame(game){
-    requestFrame(undefined, game);
+  console.log("Starting game!");
+  game.setState("running");
+  requestFrame(undefined, game);
 }
 
-const canvas = new Canvas(document.getElementById("canvas"));
-const player1 = new Player("Nebukadnes");
-const players = new Set();
-players.add(player1);
-const game = new Game(players);
-
-startGame(game);
+document.addEventListener("DOMContentLoaded", event=>{
+  const canvasHtmlElement = document.getElementById("canvas");
+  const canvas = new Canvas(canvasHtmlElement);
+  const mainPlayer = new Player("Arnar");
+  const opponents = new Set([new Player("Nebukadnes")]);
+  const keyboard = new Keyboard(document);
+  const game = new Game(mainPlayer, opponents, canvas, keyboard);
+  startGame(game);
+});
