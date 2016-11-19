@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 module.exports = {
   devtool: "source-map",
   entry: "./src/main.js",
@@ -5,6 +6,9 @@ module.exports = {
     path: __dirname,
     filename: "public/bundle.js"
   },
+  plugins: [
+    new webpack.OldWatchingPlugin()
+  ],
   module: {
     loaders: [
       { test: /\.css$/, loader: "style!css" },

@@ -20,6 +20,14 @@ class Player {
     ctx.restore();
   }
 
+  getName(){
+    return this.name;
+  }
+
+  setPosition(position){
+    this.position = position;
+  }
+
   moveUp(dt){
     this.position.setY(this.position.getY() - this.speedPerSecond * dt/1000);
   }

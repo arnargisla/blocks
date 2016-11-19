@@ -15,7 +15,7 @@ function calculateDelta(lastTime, timeStamp){
 function run(lastTime, timeStamp, game){
   const dt = calculateDelta(lastTime, timeStamp)
 
-    if(game.state === "running"){
+    if(game.getState() === "running"){
       game.gatherInputs();
       game.update(dt);
       game.render();        
@@ -35,11 +35,13 @@ function startGame(game){
 }
 
 document.addEventListener("DOMContentLoaded", event=>{
+  const playerName = "player#" + (Math.random() * 1000).toFixed(0);
+  const socket = io();
   const canvasHtmlElement = document.getElementById("canvas");
   const canvas = new Canvas(canvasHtmlElement);
-  const mainPlayer = new Player("Arnar");
-  const opponents = new Set([new Player("Nebukadnes")]);
+  const mainPlayer = new Player(playerName);
+  const opponents = new Set();
   const keyboard = new Keyboard(document);
-  const game = new Game(mainPlayer, opponents, canvas, keyboard);
+  const game = new Game(mainPlayer, opponents, canvas, keyboard, socket);
   startGame(game);
 });

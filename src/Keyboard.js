@@ -14,13 +14,17 @@ class Keyboard {
     this.htmlElement.addEventListener('keydown', e=>this.keyDownHandler(e));
   }
 
+  getKey(event){
+    return (event.key || event.code);
+  }
+
   keyUpHandler(event){
-    const key = event.key;
+    const key = this.getKey(event);
     this.pressedKeys.delete(key);
   }
 
   keyDownHandler(event){
-    const key = event.key;
+    const key = this.getKey(event);
     this.pressedKeys.add(key);
   }
 
