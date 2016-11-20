@@ -6,4 +6,7 @@ module.exports = getConfig({
   clearBeforeBuild: '!index.html',
   isDev: process.env.NODE_ENV !== 'production',
   html: false,
+  output: {
+    filename: "app.js",
+  },
 });
