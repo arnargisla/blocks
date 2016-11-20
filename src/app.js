@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", event=>{
   ReactDOM.render(<Hello name="Arnar" />, containerDomNode);
 
   const playerName = "player#" + (Math.random() * 1000).toFixed(0);
-  const socket = io("http://agis.ddns.net:9090");
+  const socket = io();
   const canvasHtmlElement = document.getElementById("canvas");
   const canvas = new Canvas(canvasHtmlElement);
   const mainPlayer = new Player(playerName);
