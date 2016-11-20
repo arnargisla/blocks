@@ -1,25 +1,9 @@
-const webpack = require('webpack');
-module.exports = {
-  devtool: "source-map",
-  entry: "./src/main.js",
-  output: {
-    path: __dirname,
-    filename: "public/bundle.js"
-  },
-  plugins: [
-    new webpack.OldWatchingPlugin()
-  ],
-  module: {
-    loaders: [
-      { test: /\.css$/, loader: "style!css" },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
-      }
-    ]
-  }
-};
+var getConfig = require('hjs-webpack');
+
+module.exports = getConfig({
+  in: 'src/app.js',
+  out: 'public',
+  clearBeforeBuild: '!index.html',
+  isDev: process.env.NODE_ENV !== 'production',
+  html: false,
+});

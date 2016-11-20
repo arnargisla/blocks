@@ -1,5 +1,5 @@
-import { Position } from "./Position";
-import { util } from "./util";
+import Position from "./Position";
+import util from "./util";
 
 class Player {
   constructor(name){
@@ -45,4 +45,4 @@ class Player {
   }
 }
 
-export { Player };
+export default Player;

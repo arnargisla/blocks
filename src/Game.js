@@ -1,5 +1,5 @@
-import { Position } from './Position.js';
-import { Player } from './Player.js';
+import Position from './Position.js';
+import Player from './Player.js';
 class Game {
   constructor(player, opponents, canvas, keyboard, socket){
     socket.emit("init player", { name: player.getName() });
@@ -100,4 +100,4 @@ class Game {
   }
 }
 
-export { Game };
+export default Game;

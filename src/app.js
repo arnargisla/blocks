@@ -1,7 +1,10 @@
-import { Canvas } from "./Canvas.js";
-import { Game } from "./Game.js";
-import { Keyboard } from "./Keyboard.js";
-import { Player } from "./Player.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import Canvas from "./Canvas.js";
+import Game from "./Game.js";
+import Keyboard from "./Keyboard.js";
+import Player from "./Player.js";
 
 function calculateDelta(lastTime, timeStamp){
   if(lastTime){
@@ -35,8 +38,18 @@ function startGame(game){
 }
 
 document.addEventListener("DOMContentLoaded", event=>{
+  const containerDomNode = document.getElementById("root");
+
+  class Hello extends React.Component {
+    render() {
+      return <div>Hello {this.props.name}</div>;
+    }
+  }
+
+  ReactDOM.render(<Hello name="Arnar" />, containerDomNode);
+
   const playerName = "player#" + (Math.random() * 1000).toFixed(0);
-  const socket = io();
+  const socket = io("http://agis.ddns.net:9090");
   const canvasHtmlElement = document.getElementById("canvas");
   const canvas = new Canvas(canvasHtmlElement);
   const mainPlayer = new Player(playerName);
