@@ -32,29 +32,60 @@ function requestFrame(lastTime, game){
 }
 
 function startGame(game){
-  console.log("Starting game!");
   game.setState("running");
   requestFrame(undefined, game);
 }
 
 document.addEventListener("DOMContentLoaded", event=>{
-  const containerDomNode = document.getElementById("root");
+  class CanvasComponent extends React.Component {
+    componentDidMount() {
+      ReactDOM.findDOMNode(this).appendChild(this.props.canvas);
+    }
 
-  class Hello extends React.Component {
+    getDrawingContext() {
+      return this.state.drawingContext;
+    }
+
     render() {
-      return <div>Hello {this.props.name}</div>;
+      return (
+        <div />
+      );
     }
   }
 
-  ReactDOM.render(<Hello name="Arnar" />, containerDomNode);
+  class Root extends React.Component {
+    render() {
+      return (
+          <div>
+            <div>Hello {this.props.name}</div>
+            {this.props.canvas}
+          </div>
+      );
+    }
+  }
 
-  const playerName = "player#" + (Math.random() * 1000).toFixed(0);
-  const socket = io();
-  const canvasHtmlElement = document.getElementById("canvas");
-  const canvas = new Canvas(canvasHtmlElement);
+  const containerDomNode = document.getElementById("root");
+
+  const playerName = "player#" + (Math.random() * 1000).toFixed(15);
   const mainPlayer = new Player(playerName);
-  const opponents = new Set();
+
+  const opponents = new Map();
+  
+  const canvasHtmlElement = document.createElement("canvas");
+  canvasHtmlElement.width = 500;
+  canvasHtmlElement.height = 500;
+  canvasHtmlElement.style.border = "1px solid black";
+  const canvas = new Canvas(canvasHtmlElement);
+  const canvasComponent = <CanvasComponent canvas={canvasHtmlElement} />;
+
   const keyboard = new Keyboard(document);
+
+  const socket = io('http://agis.ddns.net:3001/');
+  
   const game = new Game(mainPlayer, opponents, canvas, keyboard, socket);
+
   startGame(game);
+
+  const rootComponent = <Root canvas={canvasComponent} />;
+  ReactDOM.render(canvasComponent, containerDomNode);
 });
