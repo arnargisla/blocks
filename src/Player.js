@@ -3,6 +3,7 @@ import util from "./util";
 
 class Player {
   constructor(name){
+    this.isMainPlayer = false;
     this.name = name;
     this.height = 20;
     this.width = 20;
@@ -10,6 +11,10 @@ class Player {
     this.speedPerSecond = 250;
     this.position = new Position(5+this.width, 5+this.height);
     this.destination = new Position(this.position);
+  }
+
+  setIsMainPlayer(isMainPlayer){
+    this.isMainPlayer = isMainPlayer;
   }
 
   update(dt){
@@ -38,8 +43,25 @@ class Player {
     const y = this.position.getY() - this.height/2;
     ctx.save();
     ctx.fillStyle = this.color;
-    ctx.fillRect(x, y, this.width, this.height);
+    ctx.fillRect(x-this.width/2, y-this.height/2, this.width, this.height);
+    this.drawTriangle(ctx);
     ctx.restore();
+  }
+
+  drawTriangle(ctx){
+    const x = this.position.getX() - this.width/2;
+    const y = this.position.getY() - this.height/2;
+    const distanceFromOrigin = Math.sqrt(x*x+y*y);
+
+    ctx.save();
+    
+    ctx.translate(x, y);
+    ctx.rotate((new Date()).getTime()/100 % (Math.PI*2));
+    ctx.translate(-x, -y);
+    ctx.fillRect(x-5, y-30, 10, 30);
+
+    ctx.restore();
+
   }
 
   getName(){

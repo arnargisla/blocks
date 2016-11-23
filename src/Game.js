@@ -14,6 +14,7 @@ class Game {
     this.gameState = "notstarted";
     this.pressedKeys = new Set();
     this.player = player;
+    this.player.setIsMainPlayer(true);
     this.lastDt = 0;
     this.renderStatsFlag = false;
     this.debugLogFlag = false;
